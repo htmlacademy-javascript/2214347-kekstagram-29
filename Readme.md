@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Kirill Shulgin](https://up.htmlacademy.ru/javascript/29/user/2214347).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Соболев](https://htmlacademy.ru/profile/sanjoyz).
 
 ---
 
