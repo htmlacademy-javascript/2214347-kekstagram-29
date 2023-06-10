@@ -21,11 +21,11 @@ const checkStringSize = (verifiableString, maximumLength) => (maximumLength >= v
 
 // Проверка работоспособности функции:
 // Cтрока короче 20 символов
-console.log('Тест №1. Ожидаю "true", получаю - ', checkStringSize('проверяемая строка', 20));
+checkStringSize('проверяемая строка', 20); // true
 // Длина строки ровно 18 символов
-console.log('Тест №2. Ожидаю "true", получаю - ', checkStringSize('проверяемая строка', 18));
+checkStringSize('проверяемая строка', 18); // true
 // Строка длиннее 10 символов
-console.log('Тест №3. Ожидаю "false", получаю - ', checkStringSize('проверяемая строка', 10));
+checkStringSize('проверяемая строка', 10); // false
 
 
 /*
@@ -58,13 +58,13 @@ function checkStringPalindrome (verifiableString) {
 
 // Проверка работоспособности функции:
 // Строка является палиндромом
-console.log('Тест №1. Ожидаю "true", получаю - ', checkStringPalindrome('топот'));
+checkStringPalindrome('топот'); // true
 // Несмотря на разный регистр, тоже палиндром
-console.log('Тест №2. Ожидаю "true", получаю - ', checkStringPalindrome('ДовОд'));
+checkStringPalindrome('ДовОд'); // true
 // Это не палиндром
-console.log('Тест №3. Ожидаю "false", получаю - ', checkStringPalindrome('Кекс'));
+checkStringPalindrome('Кекс'); // false
 // Это палиндром
-console.log('Тест №4. Ожидаю "true", получаю - ', checkStringPalindrome('Лёша на полке клопа нашёл '));
+checkStringPalindrome('Лёша на полке клопа нашёл '); // true
 
 
 /*
@@ -88,20 +88,20 @@ function extractionNumber (verifiableString) {
 
 // Проверка работоспособности функции:
 // Тест №1
-console.log('Тест №1. Ожидаю 2023, получаю - ', extractionNumber('2023 год'));
+extractionNumber('2023 год'); // 2023
 // Тест №2
-console.log('Тест №2. Ожидаю 2022, получаю - ', extractionNumber('ECMAScript 2022'));
+extractionNumber('ECMAScript 2022'); // 2022
 // Тест №3
-console.log('Тест №3. Ожидаю 105, получаю - ', extractionNumber('1 кефир, 0.5 батона'));
+extractionNumber('1 кефир, 0.5 батона'); // 105
 // Тест №4
-console.log('Тест №4. Ожидаю 7, получаю - ', extractionNumber('агент 007'));
+extractionNumber('агент 007'); // 7
 // Тест №5
-console.log('Тест №5. Ожидаю NaN, получаю - ', extractionNumber('а я томат'));
+extractionNumber('а я томат'); // NaN
 // Тест №6
-console.log('Тест №6. Ожидаю 2023, получаю - ', extractionNumber(2023));
+extractionNumber(2023); // 2023
 // Тест №7
-console.log('Тест №7. Ожидаю 1, получаю - ', extractionNumber(-1));
+extractionNumber(-1); // 1
 // Тест №8
-console.log('Тест №8. Ожидаю 15, получаю - ', extractionNumber(1.5));
+extractionNumber(1.5); // 15
 // Тест №9
-console.log('Тест №9. Ожидаю NaN, получаю - ', extractionNumber(''));
+extractionNumber(''); // NaN
