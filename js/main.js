@@ -3,7 +3,8 @@ const MIN_LIKES_COUNT = 15; // минимальное число лайков
 const MAX_LIKES_COUNT = 200; // максимальное число лайков
 const MAX_COMMENTS_COUNT = 30; // максимальное число комментариев
 const MAX_AVATARS_COUNT = 6; // максимальное число аватарок
-const DESCRIPTION = [
+const SENTENCES_COUNT = 2; // число предложений в комментарии одного человека
+const descriptions = [
   'Сумашедшие должны держаться вместе.',
   'Временно в режиме off-line.',
   'Некоторые дни начинаются лучше остальных.',
@@ -17,7 +18,7 @@ const DESCRIPTION = [
   'Мы легли на дно, мы зажгли огни, во Вселенной только мы одни.',
   'Стремись вдохновлять.'
 ];
-const NAME = [
+const names = [
   'Екатерина',
   'Василиса',
   'Антон',
@@ -30,7 +31,7 @@ const NAME = [
   'Александр',
   'Людмила'
 ];
-const MESSAGE = [
+const messages = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -67,11 +68,27 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const generateCommentId = createRandomIdFromRangeGenerator(1, 700); // вместо 700 можно поставить любое число
 
+function getCommentMessage (array, MAX_NUMBER_OF_SENTENCES) {
+  const commentMessage = [];
+  const count = getRandomInteger(1,MAX_NUMBER_OF_SENTENCES);
+  for (let i = 0; i < count; i++) {
+    let currentCommentMessage = getRandomArrayElement(array);
+    if (commentMessage.length >= messages.length) {
+      return null;
+    }
+    while (commentMessage.includes(currentCommentMessage)) {
+      currentCommentMessage = getRandomArrayElement(array);
+    }
+    commentMessage.push(currentCommentMessage);
+  }
+  return commentMessage.join(' ');
+}
+
 const createComments = () => ({
   id : generateCommentId(),
   avatar : `img/avatar-${getRandomInteger(1, MAX_AVATARS_COUNT)}.svg`,
-  message : getRandomArrayElement(MESSAGE),
-  name: getRandomArrayElement(NAME)
+  message : getCommentMessage(messages, SENTENCES_COUNT),
+  name: getRandomArrayElement(names)
 });
 
 const generatePhotoId = createRandomIdFromRangeGenerator(1, SIMILAR_PHOTO_DESCRIPTION_COUNT); // Количество id и url равно количеству объектов
@@ -81,7 +98,7 @@ const generateLikes = createRandomIdFromRangeGenerator(MIN_LIKES_COUNT, MAX_LIKE
 const createPhotoDescription = () => ({
   id : generatePhotoId(),
   url : `photos/${generateUrl()}.jpg`,
-  description : getRandomArrayElement(DESCRIPTION),
+  description : getRandomArrayElement(descriptions),
   likes : generateLikes(),
   comments : Array.from({length: getRandomInteger(0, MAX_COMMENTS_COUNT)}, createComments)
 });
