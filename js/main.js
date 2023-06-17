@@ -68,9 +68,9 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const generateCommentId = createRandomIdFromRangeGenerator(1, 700); // вместо 700 можно поставить любое число
 
-function getCommentMessage (array, MAX_NUMBER_OF_SENTENCES) {
+function getCommentMessage (array, maxNumbersOfSentences) {
   const commentMessage = [];
-  const count = getRandomInteger(1,MAX_NUMBER_OF_SENTENCES);
+  const count = getRandomInteger(1,maxNumbersOfSentences);
   for (let i = 0; i < count; i++) {
     let currentCommentMessage = getRandomArrayElement(array);
     if (commentMessage.length >= messages.length) {
