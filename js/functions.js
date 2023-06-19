@@ -1,21 +1,4 @@
-/*
-Разные вариации функции для проверки длины строки.
-*/
-
-// 1. Функция с помощью условий if и оператора return:
-
-// function checkStringSize (verifiableString, maximumLength) {
-//   if (maximumLength >= verifiableString.length) return true;
-//   return false;
-// }
-
-// 2. Функция с помощью тернарного оператора:
-
-// function checkStringSize (verifiableString, maximumLength) {
-//   return (maximumLength >= verifiableString.length);
-// }
-
-// 3. Стрелочная функция с тернарным оператором:
+// 1. Функция для проверки длины строки.
 
 const checkStringSize = (verifiableString, maximumLength) => (maximumLength >= verifiableString.length);
 
@@ -27,27 +10,9 @@ checkStringSize('проверяемая строка', 18); // true
 // Строка длиннее 10 символов
 checkStringSize('проверяемая строка', 10); // false
 
+// 2. Функция для проверки, является ли строка палиндромом.
 
-/*
-Разные вариации функции для проверки, является ли строка палиндромом.
-*/
-
-// 1. Функция с помощью цикла while и тернарного оператора:
-
-// function checkStringPalindrome (verifiableString) {
-//   const normalizedString = verifiableString.replaceAll(' ','').toLowerCase();
-//   let invertedString = '';
-//   let i = normalizedString.length - 1;
-//   while (i >= 0) {
-//     invertedString += normalizedString[i];
-//     i--;
-//   }
-//   return (normalizedString === invertedString);
-// }
-
-// 2. Функция с помощью цикла for и тернарного оператора:
-
-function checkStringPalindrome (verifiableString) {
+function isPalindrome (verifiableString) {
   const normalizedString = verifiableString.replaceAll(' ','').toLowerCase();
   let invertedString = '';
   for (let i = normalizedString.length - 1; i >= 0; i--) {
@@ -58,23 +23,19 @@ function checkStringPalindrome (verifiableString) {
 
 // Проверка работоспособности функции:
 // Строка является палиндромом
-checkStringPalindrome('топот'); // true
+isPalindrome('топот'); // true
 // Несмотря на разный регистр, тоже палиндром
-checkStringPalindrome('ДовОд'); // true
+isPalindrome('ДовОд'); // true
 // Это не палиндром
-checkStringPalindrome('Кекс'); // false
+isPalindrome('Кекс'); // false
 // Это палиндром
-checkStringPalindrome('Лёша на полке клопа нашёл '); // true
+isPalindrome('Лёша на полке клопа нашёл '); // true
 
 
-/*
-Функция для извлечения цифр из строки.
-*/
-
-// 1. Функция с помощью цикла for и условий if:
+// 3. Функция для извлечения цифр из строки.
 
 function extractionNumber (verifiableString) {
-  verifiableString = String(verifiableString);
+  verifiableString = String(verifiableString); // если передаётся число в функцию
   let stringSymbolToNumber;
   let result = '';
   for (let i = 0; i <= verifiableString.length; i++) {
@@ -105,3 +66,25 @@ extractionNumber(-1); // 1
 extractionNumber(1.5); // 15
 // Тест №9
 extractionNumber(''); // NaN
+
+// 4. Функция для определения возможности проведения встречи.
+
+function getTimeInMinutes (time) {
+  const parts = time.split(':').map(Number);
+  const [hours, minutes] = parts;
+  const minutesPerHour = 60;
+
+  return hours * minutesPerHour + minutes;
+}
+
+function isOkey (timeStart, timeEnd, meetingTimeStart, meetingDuration) {
+  const timeMeeting = getTimeInMinutes(meetingTimeStart) + meetingDuration;
+  return getTimeInMinutes(timeStart) <= timeMeeting && timeMeeting <= getTimeInMinutes(timeEnd);
+}
+
+// Проверка работоспособности
+isOkey('08:00', '17:30', '14:00', 90); // Ожидаю "true"
+isOkey('8:0', '10:0', '8:0', 120); // Ожидаю "true"
+isOkey('08:00', '14:30', '14:00', 90); // Ожидаю "false"
+isOkey('14:00', '17:30', '08:0', 90); // Ожидаю "false"
+isOkey('8:00', '17:30', '08:00', 900); // Ожидаю "false"
