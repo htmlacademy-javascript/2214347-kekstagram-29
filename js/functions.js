@@ -77,14 +77,14 @@ function getTimeInMinutes (time) {
   return hours * minutesPerHour + minutes;
 }
 
-function isOkey (timeStart, timeEnd, meetingTimeStart, meetingDuration) {
+function isMeetingPossible (timeStart, timeEnd, meetingTimeStart, meetingDuration) {
   const timeMeeting = getTimeInMinutes(meetingTimeStart) + meetingDuration;
   return getTimeInMinutes(timeStart) <= timeMeeting && timeMeeting <= getTimeInMinutes(timeEnd);
 }
 
 // Проверка работоспособности
-isOkey('08:00', '17:30', '14:00', 90); // Ожидаю "true"
-isOkey('8:0', '10:0', '8:0', 120); // Ожидаю "true"
-isOkey('08:00', '14:30', '14:00', 90); // Ожидаю "false"
-isOkey('14:00', '17:30', '08:0', 90); // Ожидаю "false"
-isOkey('8:00', '17:30', '08:00', 900); // Ожидаю "false"
+isMeetingPossible('08:00', '17:30', '14:00', 90); // Ожидаю "true"
+isMeetingPossible('8:0', '10:0', '8:0', 120); // Ожидаю "true"
+isMeetingPossible('08:00', '14:30', '14:00', 90); // Ожидаю "false"
+isMeetingPossible('14:00', '17:30', '08:0', 90); // Ожидаю "false"
+isMeetingPossible('8:00', '17:30', '08:00', 900); // Ожидаю "false"
