@@ -154,7 +154,7 @@
           </div>
 
           <!-- Комментарии к изображению -->
-          <div class="social__comment-count">5 из <span class="comments-count">125</span> комментариев</div>
+          <div class="social__comment-count"><span class="comments-show">5</span> из <span class="comments-count">125</span> комментариев</div>
           <ul class="social__comments">
             <li class="social__comment">
               <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
@@ -205,6 +205,14 @@
         <span class="picture__likes"></span>
       </p>
     </a>
+  </template>
+
+  <!-- Шаблон комментария -->
+  <template id="social__comment">
+    <li class="social__comment">
+      <img class="social__picture" src="" width="35" height="35" alt="">
+      <p class="social__text"></p>
+    </li>
   </template>
 
   <!-- Сообщение с ошибкой загрузки изображения -->
