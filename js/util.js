@@ -40,4 +40,6 @@ function getCommentMessage (array, maxNumbersOfSentences) {
   return commentMessage.join(' ');
 }
 
-export {getRandomArrayElement, getRandomInteger, createRandomIdFromRangeGenerator, getCommentMessage};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomArrayElement, getRandomInteger, createRandomIdFromRangeGenerator, getCommentMessage, isEscapeKey};

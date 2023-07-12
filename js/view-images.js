@@ -1,4 +1,5 @@
-import {createPhotoDescriptions} from './data.js';
+import {createPhotoDescriptions, NUMBER_COMMENTS_DISPLAYED} from './data.js';
+import {isEscapeKey} from './util.js';
 // Константы к миниатюрам
 const pictures = document.querySelector('.pictures'); // контейнер миниатюр
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture'); // шаблон миниатюр
@@ -13,6 +14,44 @@ const listComments = fullPhoto.querySelector('.social__comments'); // списо
 
 const commentsLoader = fullPhoto.querySelector('.comments-loader'); // кнопка загрузки комментариев
 const commentsShow = fullPhoto.querySelector('.comments-show'); // открыто коммов
+
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeFullPhotoModal();
+  }
+};
+
+const openeningComments = (multipleUse = true) => {
+  const commentsHidden = fullPhoto.querySelectorAll('.social__comment.hidden'); // массив скрытых комментариев
+
+  if (commentsHidden.length === 0) {
+    commentsShow.textContent = commentsHidden.length;
+    commentsLoader.classList.add('hidden');
+  }
+  if (commentsHidden.length > 0 && commentsHidden.length <= NUMBER_COMMENTS_DISPLAYED) {
+    for (let i = 0; i < commentsHidden.length; i++) {
+      commentsHidden[i].classList.remove('hidden');
+      // изменение счётчика открытых комментариев
+      if (multipleUse) {
+        commentsShow.textContent = parseInt(commentsShow.textContent, 10) + 1;
+      } else {
+        commentsShow.textContent = i + 1;
+      }
+    }
+    commentsLoader.classList.add('hidden');
+  }
+  if (commentsHidden.length > NUMBER_COMMENTS_DISPLAYED) {
+    for (let i = 0; i < NUMBER_COMMENTS_DISPLAYED; i++) {
+      commentsHidden[i].classList.remove('hidden');
+      if (multipleUse) {
+        commentsShow.textContent = parseInt(commentsShow.textContent, 10) + 1;
+      } else {
+        commentsShow.textContent = i + 1;
+      }
+    }
+  }
+};
 
 
 photoDescriptions.forEach(({url, description, likes, comments}) => {
@@ -46,61 +85,25 @@ photoDescriptions.forEach(({url, description, likes, comments}) => {
 
     listComments.appendChild(listCommentsFragment);
 
-    const arrayComments = listComments.querySelectorAll('.social__comment'); // массив комментариев
+    openeningComments(false);
 
-    // показ первых 5ти комментариев
-    for (let i = 0; i < 5; i++) {
-      if (arrayComments.length <= 5) {
-        for (let k = 0; k < arrayComments.length; k++) {
-          arrayComments[k].classList.remove('hidden');
-        }
-        commentsShow.textContent = arrayComments.length;
-        commentsLoader.classList.add('hidden');
-        break;
-      }
-      arrayComments[i].classList.remove('hidden');
-      commentsShow.textContent = i + 1;
-    }
+    commentsLoader.addEventListener('click', openeningComments);
+    document.addEventListener('keydown', onDocumentKeydown);
   });
 
 });
 
 pictures.appendChild(listPicturesFragment);
 
-const openeningComments = () => {
-  const commentsHidden = fullPhoto.querySelectorAll('.social__comment.hidden');
-  for (let i = 0; i < 5; i++) {
-    if (commentsHidden.length <= 5) {
-      for (let k = 0; k < commentsHidden.length; k++) {
-        commentsHidden[k].classList.remove('hidden');
-        commentsShow.textContent = parseInt(commentsShow.textContent, 10) + 1; // показ открытых комментариев
-      }
-      commentsLoader.classList.add('hidden');
-      commentsLoader.removeEventListener('click', openeningComments);
-      break;
-    }
-    commentsHidden[i].classList.remove('hidden');
-    commentsShow.textContent = parseInt(commentsShow.textContent, 10) + 1; // показ открытых комментариев
-  }
-};
-
-commentsLoader.addEventListener('click', openeningComments);
-
-buttonClose.addEventListener('click', () => {
+function closeFullPhotoModal () {
   fullPhoto.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   commentsLoader.classList.remove('hidden');
-  commentsLoader.addEventListener('click', openeningComments);
-});
+  commentsLoader.removeEventListener('click', openeningComments);
+  document.removeEventListener('keydown', onDocumentKeydown);
+}
 
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    fullPhoto.classList.add('hidden');
-    document.querySelector('body').classList.remove('modal-open');
-    commentsLoader.classList.remove('hidden');
-    commentsLoader.addEventListener('click', openeningComments);
-  }
+buttonClose.addEventListener('click', () => {
+  closeFullPhotoModal();
 });
-
 
