@@ -7,6 +7,7 @@ const MAX_COMMENTS_COUNT = 30; // максимальное число комме
 const MAX_AVATARS_COUNT = 6; // максимальное число аватарок
 const SENTENCES_COUNT = 2; // число предложений в комментарии одного человека
 const MAX_COMMENT_ID_COUNT = 700; // максимальное число id комментариев (большое рандомное число)
+const NUMBER_COMMENTS_DISPLAYED = 5; // число отображаемых комментариев
 const descriptions = [
   'Сумашедшие должны держаться вместе.',
   'Временно в режиме off-line.',
@@ -65,4 +66,4 @@ const createPhotoDescription = () => ({
 
 const createPhotoDescriptions = () => Array.from({length: SIMILAR_PHOTO_DESCRIPTION_COUNT}, createPhotoDescription);
 
-export {createPhotoDescriptions};
+export {createPhotoDescriptions, NUMBER_COMMENTS_DISPLAYED};
