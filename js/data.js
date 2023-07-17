@@ -8,6 +8,10 @@ const MAX_AVATARS_COUNT = 6; // максимальное число аватар
 const SENTENCES_COUNT = 2; // число предложений в комментарии одного человека
 const MAX_COMMENT_ID_COUNT = 700; // максимальное число id комментариев (большое рандомное число)
 const NUMBER_COMMENTS_DISPLAYED = 5; // число отображаемых комментариев
+const MAX_LENGTH_HASHTAG = 19; // максимальная длина хештега
+const MAX_NUMBER_HASHTAGS = 5; // максимальное число хештегов
+const MAX_LENGTH_COMMENT = 140; // максимальная длина символов комментария
+
 const descriptions = [
   'Сумашедшие должны держаться вместе.',
   'Временно в режиме off-line.',
@@ -66,4 +70,4 @@ const createPhotoDescription = () => ({
 
 const createPhotoDescriptions = () => Array.from({length: SIMILAR_PHOTO_DESCRIPTION_COUNT}, createPhotoDescription);
 
-export {createPhotoDescriptions, NUMBER_COMMENTS_DISPLAYED};
+export {createPhotoDescriptions, NUMBER_COMMENTS_DISPLAYED, MAX_LENGTH_HASHTAG, MAX_NUMBER_HASHTAGS, MAX_LENGTH_COMMENT};

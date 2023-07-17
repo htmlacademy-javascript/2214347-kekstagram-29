@@ -53,6 +53,15 @@ const openeningComments = (multipleUse = true) => {
   }
 };
 
+function closeFullPhotoModal () {
+  fullPhoto.classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+  commentsLoader.classList.remove('hidden');
+  buttonClose.removeEventListener('click', closeFullPhotoModal);
+  commentsLoader.removeEventListener('click', openeningComments);
+  document.removeEventListener('keydown', onDocumentKeydown);
+}
+
 
 photoDescriptions.forEach(({url, description, likes, comments}) => {
   const photoDescriptionElement = pictureTemplate.cloneNode(true);
@@ -87,6 +96,7 @@ photoDescriptions.forEach(({url, description, likes, comments}) => {
 
     openeningComments(false);
 
+    buttonClose.addEventListener('click', closeFullPhotoModal);
     commentsLoader.addEventListener('click', openeningComments);
     document.addEventListener('keydown', onDocumentKeydown);
   });
@@ -94,16 +104,4 @@ photoDescriptions.forEach(({url, description, likes, comments}) => {
 });
 
 pictures.appendChild(listPicturesFragment);
-
-function closeFullPhotoModal () {
-  fullPhoto.classList.add('hidden');
-  document.querySelector('body').classList.remove('modal-open');
-  commentsLoader.classList.remove('hidden');
-  commentsLoader.removeEventListener('click', openeningComments);
-  document.removeEventListener('keydown', onDocumentKeydown);
-}
-
-buttonClose.addEventListener('click', () => {
-  closeFullPhotoModal();
-});
 
