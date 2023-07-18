@@ -1,5 +1,5 @@
-import {MAX_LENGTH_HASHTAG, MAX_NUMBER_HASHTAGS, MAX_LENGTH_COMMENT} from './data.js';
-import {form, inputHashtag, inputComment} from './editing-mode.js';
+import {MAX_LENGTH_HASHTAG, MAX_NUMBER_HASHTAGS, MAX_LENGTH_COMMENT} from '../data.js';
+import {form, inputHashtag, inputComment} from './dom-elements.js';
 // Валидация
 
 const pristine = new Pristine(form, {
@@ -60,8 +60,13 @@ pristine.addValidator(
   `Максимальная длина сообщения ${MAX_LENGTH_COMMENT} символов`
 );
 
-form.addEventListener('submit', (evt) => {
+const submitForm = (evt) => {
   if (!pristine.validate()) {
     evt.preventDefault();
   }
-});
+};
+
+const addEventFormSubmit = () => form.addEventListener('submit', submitForm);
+const removeEventFormSubmit = () => form.removeEventListener('submit', submitForm);
+
+export {addEventFormSubmit, removeEventFormSubmit};
