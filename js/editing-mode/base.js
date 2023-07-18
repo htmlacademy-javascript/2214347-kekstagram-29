@@ -1,16 +1,8 @@
-import {uploadFile, imageEditingMode, buttonClose, inputHashtag, inputComment} from './dom-elements';
+import {uploadFile, imageEditingMode, buttonClose, inputHashtag, inputComment} from './dom-elements.js';
 import {isEscapeKey} from '../util.js';
 import {addEventFormSubmit, removeEventFormSubmit} from './validation.js';
 import {addEventsButtonsZoom, removeEventsButtonsZoom} from './scale.js';
 import {addEventsEffects, removeEventsEffects} from './effects.js';
-
-// const form = document.querySelector('.img-upload__form'); // форма
-// const uploadFile = form.querySelector('.img-upload__input'); // инпут загрузки изображения
-// const imageEditingMode = form.querySelector('.img-upload__overlay'); // модальное окно редактирования изображения
-// const buttonClose = form.querySelector('.img-upload__cancel'); // кнопка закрытия модального окна
-// const inputHashtag = form.querySelector('.text__hashtags'); // инпут хеш-тегов
-// const inputComment = form.querySelector('.text__description'); // инпут комментов
-
 
 const onDocumentKeydown = (evt) => {
   if (inputHashtag !== document.activeElement && inputComment !== document.activeElement) {

@@ -1,6 +1,5 @@
 import {MAX_LENGTH_HASHTAG, MAX_NUMBER_HASHTAGS, MAX_LENGTH_COMMENT} from '../data.js';
 import {form, inputHashtag, inputComment} from './dom-elements.js';
-// Валидация
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper', // Элемент, на который будут добавляться классы
