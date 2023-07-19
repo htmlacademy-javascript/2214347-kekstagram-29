@@ -1,6 +1,5 @@
-import {MAX_LENGTH_HASHTAG, MAX_NUMBER_HASHTAGS, MAX_LENGTH_COMMENT} from './data.js';
-import {form, inputHashtag, inputComment} from './editing-mode.js';
-// Валидация
+import {MAX_LENGTH_HASHTAG, MAX_NUMBER_HASHTAGS, MAX_LENGTH_COMMENT} from '../data.js';
+import {form, inputHashtag, inputComment} from './dom-elements.js';
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper', // Элемент, на который будут добавляться классы
@@ -60,8 +59,13 @@ pristine.addValidator(
   `Максимальная длина сообщения ${MAX_LENGTH_COMMENT} символов`
 );
 
-form.addEventListener('submit', (evt) => {
+const onFormSubmit = (evt) => {
   if (!pristine.validate()) {
     evt.preventDefault();
   }
-});
+};
+
+const addEventFormSubmit = () => form.addEventListener('submit', onFormSubmit);
+const removeEventFormSubmit = () => form.removeEventListener('submit', onFormSubmit);
+
+export {addEventFormSubmit, removeEventFormSubmit};
