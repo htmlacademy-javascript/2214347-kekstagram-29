@@ -26,7 +26,7 @@ noUiSlider.create(sliderElement, {
 
 let activeEffectValue; // значение выбранной радио-кнопки
 
-const changingSlider = () => {
+const onSliderChanging = () => {
   activeEffectValue = form.querySelector('.effects__radio:checked').value;
 
   if (activeEffectValue === 'none') {
@@ -38,19 +38,19 @@ const changingSlider = () => {
   }
 };
 
-const changingPreview = () => {
+const onPreviewChanging = () => {
   valueElement.value = sliderElement.noUiSlider.get();
   imagePreview.style.filter = getEffecFiltertOption(activeEffectValue, valueElement);
 };
 
 const addEventsEffects = () => {
-  form.addEventListener('change', changingSlider);
-  sliderElement.noUiSlider.on('update', changingPreview);
+  form.addEventListener('change', onSliderChanging);
+  sliderElement.noUiSlider.on('update', onPreviewChanging);
 };
 
 const removeEventsEffects = () => {
-  form.removeEventListener('change', changingSlider);
-  sliderElement.noUiSlider.off('update', changingPreview);
+  form.removeEventListener('change', onSliderChanging);
+  sliderElement.noUiSlider.off('update', onPreviewChanging);
 };
 
 export {addEventsEffects, removeEventsEffects};

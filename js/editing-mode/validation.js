@@ -59,13 +59,13 @@ pristine.addValidator(
   `Максимальная длина сообщения ${MAX_LENGTH_COMMENT} символов`
 );
 
-const submitForm = (evt) => {
+const onFormSubmit = (evt) => {
   if (!pristine.validate()) {
     evt.preventDefault();
   }
 };
 
-const addEventFormSubmit = () => form.addEventListener('submit', submitForm);
-const removeEventFormSubmit = () => form.removeEventListener('submit', submitForm);
+const addEventFormSubmit = () => form.addEventListener('submit', onFormSubmit);
+const removeEventFormSubmit = () => form.removeEventListener('submit', onFormSubmit);
 
 export {addEventFormSubmit, removeEventFormSubmit};
