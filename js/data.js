@@ -1,19 +1,5 @@
+import {MAX_COMMENT_ID_COUNT, SIMILAR_PHOTO_DESCRIPTION_COUNT, MIN_LIKES_COUNT, MAX_LIKES_COUNT, MAX_AVATARS_COUNT, SENTENCES_COUNT, MAX_COMMENTS_COUNT} from './constants.js';
 import {getRandomArrayElement, getRandomInteger, createRandomIdFromRangeGenerator, getCommentMessage} from './util.js';
-
-const SIMILAR_PHOTO_DESCRIPTION_COUNT = 25; // количество объектов в массиве
-const MIN_LIKES_COUNT = 15; // минимальное число лайков
-const MAX_LIKES_COUNT = 200; // максимальное число лайков
-const MAX_COMMENTS_COUNT = 30; // максимальное число комментариев
-const MAX_AVATARS_COUNT = 6; // максимальное число аватарок
-const SENTENCES_COUNT = 2; // число предложений в комментарии одного человека
-const MAX_COMMENT_ID_COUNT = 700; // максимальное число id комментариев (большое рандомное число)
-const NUMBER_COMMENTS_DISPLAYED = 5; // число отображаемых комментариев
-const MAX_LENGTH_HASHTAG = 19; // максимальная длина хештега
-const MAX_NUMBER_HASHTAGS = 5; // максимальное число хештегов
-const MAX_LENGTH_COMMENT = 140; // максимальная длина символов комментария
-const SCALE_VALUE_MAXIMUM = '100%'; // максимальное значение масштаба
-const SCALE_VALUE_MINIMUM = '25%'; // минимальное значение масштаба
-const STEP_SCALE = 25; // шаг масштаба изображения
 
 const descriptions = [
   'Сумашедшие должны держаться вместе.',
@@ -73,4 +59,4 @@ const createPhotoDescription = () => ({
 
 const createPhotoDescriptions = () => Array.from({length: SIMILAR_PHOTO_DESCRIPTION_COUNT}, createPhotoDescription);
 
-export {createPhotoDescriptions, NUMBER_COMMENTS_DISPLAYED, MAX_LENGTH_HASHTAG, MAX_NUMBER_HASHTAGS, MAX_LENGTH_COMMENT, STEP_SCALE, SCALE_VALUE_MAXIMUM, SCALE_VALUE_MINIMUM};
+export {createPhotoDescriptions};

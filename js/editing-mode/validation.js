@@ -1,5 +1,12 @@
-import {MAX_LENGTH_HASHTAG, MAX_NUMBER_HASHTAGS, MAX_LENGTH_COMMENT} from '../data.js';
-import {form, inputHashtag, inputComment} from './dom-elements.js';
+import {MAX_LENGTH_HASHTAG, MAX_NUMBER_HASHTAGS, MAX_LENGTH_COMMENT} from '../constants.js';
+import {form, inputHashtag, inputComment, buttonSubmit} from './dom-elements.js';
+import { sendData } from '../api.js';
+import { showMessage, onEscapePress } from './messages.js';
+
+const ButtonSubmitText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper', // Элемент, на который будут добавляться классы
@@ -59,13 +66,40 @@ pristine.addValidator(
   `Максимальная длина сообщения ${MAX_LENGTH_COMMENT} символов`
 );
 
-const onFormSubmit = (evt) => {
-  if (!pristine.validate()) {
-    evt.preventDefault();
-  }
+const blockButtonSubmit = () => {
+  buttonSubmit.disabled = true;
+  buttonSubmit.textContent = ButtonSubmitText.SENDING;
 };
 
-const addEventFormSubmit = () => form.addEventListener('submit', onFormSubmit);
-const removeEventFormSubmit = () => form.removeEventListener('submit', onFormSubmit);
+const unblockButtonSubmit = () => {
+  buttonSubmit.disabled = false;
+  buttonSubmit.textContent = ButtonSubmitText.IDLE;
+};
 
-export {addEventFormSubmit, removeEventFormSubmit};
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockButtonSubmit();
+      sendData(new FormData(evt.target))
+        .then(() => {
+          onSuccess();
+          showMessage('success');
+          document.addEventListener('keydown', onEscapePress);
+        })
+        .catch(
+          () => {
+            showMessage('error');
+            document.addEventListener('keydown', onEscapePress);
+          }
+        )
+        .finally(unblockButtonSubmit);
+    }
+  });
+};
+
+export {
+  setUserFormSubmit
+};
