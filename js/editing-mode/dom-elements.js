@@ -12,6 +12,7 @@ const imagePreview = form.querySelector('.img-upload__preview'); //редакт�
 const sliderElement = form.querySelector('.effect-level__slider'); // слайдер
 const sliderContainer = form.querySelector('.img-upload__effect-level'); // контейнер слайдера
 const valueElement = form.querySelector('.effect-level__value'); // поле для значения эффекта фото
+const buttonSubmit = form.querySelector('#upload-submit'); // кнопка отправки данных на сервер
 
 
 export {
@@ -27,5 +28,6 @@ export {
   imagePreview,
   sliderElement,
   sliderContainer,
-  valueElement
+  valueElement,
+  buttonSubmit
 };

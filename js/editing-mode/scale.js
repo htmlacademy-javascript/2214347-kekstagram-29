@@ -1,4 +1,4 @@
-import {STEP_SCALE, SCALE_VALUE_MAXIMUM, SCALE_VALUE_MINIMUM} from '../data.js';
+import {STEP_SCALE, SCALE_VALUE_MAXIMUM, SCALE_VALUE_MINIMUM} from '../constants.js';
 import {inputScale, imagePreview, buttonZoomIn, buttonZoomOut} from './dom-elements.js';
 
 const arrayInputScale = inputScale.value.split('%');
