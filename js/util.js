@@ -1,5 +1,3 @@
-import {ALERT_SHOW_TIME} from './constants.js';
-
 function getRandomInteger (min, max) {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
@@ -43,6 +41,14 @@ function getCommentMessage (array, maxNumbersOfSentences) {
 }
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
 
 const getEffectSliderOptions = (effect) => {
   switch (effect) {
@@ -109,7 +115,7 @@ const getEffecFiltertOption = (effect, input) => {
   }
 };
 
-const showAlert = (message) => {
+const showAlert = (message, ALERT_SHOW_TIME) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
   alertContainer.style.position = 'absolute';
@@ -138,5 +144,6 @@ export {
   isEscapeKey,
   getEffectSliderOptions,
   getEffecFiltertOption,
-  showAlert
+  showAlert,
+  debounce
 };

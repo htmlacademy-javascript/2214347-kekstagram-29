@@ -76,7 +76,7 @@ const unblockButtonSubmit = () => {
   buttonSubmit.textContent = ButtonSubmitText.IDLE;
 };
 
-const setUserFormSubmit = (onSuccess) => {
+const setFormSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -101,5 +101,5 @@ const setUserFormSubmit = (onSuccess) => {
 };
 
 export {
-  setUserFormSubmit
+  setFormSubmit
 };
