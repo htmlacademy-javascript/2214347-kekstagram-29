@@ -1,5 +1,5 @@
-import {uploadFile, imageEditingMode, buttonClose, inputHashtag, inputComment, inputScale} from './dom-elements.js';
-import { SCALE_VALUE_MAXIMUM } from '../constants.js';
+import {uploadFile, imageEditingMode, buttonClose, inputHashtag, inputComment, inputScale, imagePreview, effectsPreviews} from './dom-elements.js';
+import { SCALE_VALUE_MAXIMUM, ACCEPTABLE_FILE_TYPES } from '../constants.js';
 import {isEscapeKey} from '../util.js';
 import {setFormSubmit} from './validation.js';
 import {addEventsButtonsZoom, removeEventsButtonsZoom} from './scale.js';
@@ -43,8 +43,22 @@ const openEditingMode = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
+const showUploadFile = () => {
+  const file = uploadFile.files[0];
+  const fileName = file.name.toLowerCase();
+  const isNameAcceptable = ACCEPTABLE_FILE_TYPES.some((type) => fileName.endsWith(type));
+  if(isNameAcceptable) {
+    imagePreview.src = URL.createObjectURL(file);
+    effectsPreviews.forEach((effectPreview) => {
+      effectPreview.style.backgroundImage = `url(${imagePreview.src})`;
+    });
+  }
+};
 
 setFormSubmit(closeEditingMode);
-uploadFile.addEventListener('change', openEditingMode);
+uploadFile.addEventListener('change', () => {
+  openEditingMode();
+  showUploadFile();
+});
 
 

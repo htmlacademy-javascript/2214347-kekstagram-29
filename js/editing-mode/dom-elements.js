@@ -8,11 +8,12 @@ const inputComment = form.querySelector('.text__description'); // инпут к�
 const buttonZoomIn = form.querySelector('.scale__control--bigger'); //кнопка увеличения масштаба
 const buttonZoomOut = form.querySelector('.scale__control--smaller'); //кнопка уменьшения масштаба
 const inputScale = form.querySelector('input.scale__control'); //поле масштаба
-const imagePreview = form.querySelector('.img-upload__preview'); //редактируемое фото
+const imagePreview = form.querySelector('.img-upload__preview img'); //редактируемое фото
 const sliderElement = form.querySelector('.effect-level__slider'); // слайдер
 const sliderContainer = form.querySelector('.img-upload__effect-level'); // контейнер слайдера
 const valueElement = form.querySelector('.effect-level__value'); // поле для значения эффекта фото
 const buttonSubmit = form.querySelector('#upload-submit'); // кнопка отправки данных на сервер
+const effectsPreviews = form.querySelectorAll('.effects__preview'); // массив превью фото с наложенны эффектом
 
 
 export {
@@ -29,5 +30,6 @@ export {
   sliderElement,
   sliderContainer,
   valueElement,
-  buttonSubmit
+  buttonSubmit,
+  effectsPreviews
 };
