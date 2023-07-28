@@ -1,7 +1,7 @@
 import {uploadFile, imageEditingMode, buttonClose, inputHashtag, inputComment, inputScale} from './dom-elements.js';
 import { SCALE_VALUE_MAXIMUM } from '../constants.js';
 import {isEscapeKey} from '../util.js';
-import {setUserFormSubmit} from './validation.js';
+import {setFormSubmit} from './validation.js';
 import {addEventsButtonsZoom, removeEventsButtonsZoom} from './scale.js';
 import {addEventsEffects, removeEventsEffects} from './effects.js';
 
@@ -44,7 +44,7 @@ const openEditingMode = () => {
 };
 
 
-setUserFormSubmit(closeEditingMode);
+setFormSubmit(closeEditingMode);
 uploadFile.addEventListener('change', openEditingMode);
 
 

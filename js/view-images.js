@@ -61,7 +61,13 @@ function closeFullPhotoModal () {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
+// функция очищения фото
+const removePictures = () => {
+  document.querySelectorAll('.picture').forEach((picture) => picture.remove());
+};
+
 const renderPhotos = (photoDescriptions) => {
+  removePictures();
   photoDescriptions.forEach(({url, description, likes, comments}) => {
     const photoDescriptionElement = pictureTemplate.cloneNode(true);
     photoDescriptionElement.querySelector('.picture__img').src = url;
@@ -75,12 +81,12 @@ const renderPhotos = (photoDescriptions) => {
 
       document.querySelector('body').classList.add('modal-open');
 
-      fullPhoto.querySelector('img').src = url; // путь фотки
-      fullPhoto.querySelector('.social__caption').textContent = description; // описание фотки
-      fullPhoto.querySelector('.likes-count').textContent = likes; // лайки фотки
-      fullPhoto.querySelector('.comments-count').textContent = comments.length; // кол-во комментариев фотки
+      fullPhoto.querySelector('img').src = url;
+      fullPhoto.querySelector('.social__caption').textContent = description;
+      fullPhoto.querySelector('.likes-count').textContent = likes;
+      fullPhoto.querySelector('.comments-count').textContent = comments.length;
 
-      listComments.innerHTML = ''; // очищение списка комментариев
+      listComments.innerHTML = '';
 
       comments.forEach(({avatar, message, name}) => {
         const socialComment = commentTemplate.cloneNode(true);
