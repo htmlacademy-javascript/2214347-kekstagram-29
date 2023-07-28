@@ -15,6 +15,7 @@ const STEP_SCALE = 25; // шаг масштаба изображения
 const ALERT_SHOW_TIME = 5000; // время показа ошибки
 const NUMBER_RANDOM_PHOTOS = 10; // число рандомных фото
 const RERENDER_DELAY = 500; // время задержки отрисовки
+const ACCEPTABLE_FILE_TYPES = ['jpg', 'jprg', 'png']; // разрешённые типы файлов
 
 export {
   SIMILAR_PHOTO_DESCRIPTION_COUNT,
@@ -33,5 +34,6 @@ export {
   SCALE_VALUE_MINIMUM,
   ALERT_SHOW_TIME,
   NUMBER_RANDOM_PHOTOS,
-  RERENDER_DELAY
+  RERENDER_DELAY,
+  ACCEPTABLE_FILE_TYPES
 };
