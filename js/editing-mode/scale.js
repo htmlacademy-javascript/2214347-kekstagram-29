@@ -12,6 +12,8 @@ const zoomIn = () => {
   }
 };
 
+const onButtonZoomInClick = () => zoomIn();
+
 const zoomOut = () => {
   if (inputScale.value !== SCALE_VALUE_MINIMUM) {
     arrayInputScale[0] -= STEP_SCALE;
@@ -20,14 +22,16 @@ const zoomOut = () => {
   }
 };
 
+const onButtonZoomOutClick = () => zoomOut();
+
 const addEventsButtonsZoom = () => {
-  buttonZoomIn.addEventListener('click', zoomIn);
-  buttonZoomOut.addEventListener('click', zoomOut);
+  buttonZoomIn.addEventListener('click', onButtonZoomInClick);
+  buttonZoomOut.addEventListener('click', onButtonZoomOutClick);
 };
 
 const removeEventsButtonsZoom = () => {
-  buttonZoomIn.removeEventListener('click', zoomIn);
-  buttonZoomOut.removeEventListener('click', zoomOut);
+  buttonZoomIn.removeEventListener('click', onButtonZoomInClick);
+  buttonZoomOut.removeEventListener('click', onButtonZoomOutClick);
 };
 
 export {addEventsButtonsZoom, removeEventsButtonsZoom};

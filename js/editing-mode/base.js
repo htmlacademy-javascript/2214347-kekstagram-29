@@ -5,7 +5,7 @@ import {resetValidator, pristine} from './validation.js';
 import {addEventsButtonsZoom, removeEventsButtonsZoom} from './scale.js';
 import {addEventsEffects, removeEventsEffects} from './effects.js';
 import { sendData } from '../api.js';
-import { showMessage, onEscapePress } from './messages.js';
+import { showMessage } from './messages.js';
 
 const SCALE_VALUE_BASE = SCALE_VALUE_MAXIMUM;
 
@@ -42,13 +42,15 @@ const resetEditingMode = () => {
   resetValidator();
 };
 
+const onButtonCloseClick = () => closeEditingMode();
+
 function closeEditingMode () {
   imageEditingMode.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   removeEventsButtonsZoom();
   removeEventsEffects();
   resetEditingMode();
-  buttonClose.removeEventListener('click', closeEditingMode);
+  buttonClose.removeEventListener('click', onButtonCloseClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
@@ -57,7 +59,7 @@ const openEditingMode = () => {
   document.querySelector('body').classList.add('modal-open');
   addEventsButtonsZoom();
   addEventsEffects();
-  buttonClose.addEventListener('click', closeEditingMode);
+  buttonClose.addEventListener('click', onButtonCloseClick);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
@@ -83,13 +85,12 @@ const setFormSubmit = (onSuccess) => {
       sendData(new FormData(evt.target))
         .then(() => {
           onSuccess();
-          document.addEventListener('keydown', onEscapePress);
-          showMessage('success', onDocumentKeydown);
+          showMessage('success');
         })
         .catch(
           () => {
-            document.addEventListener('keydown', onEscapePress);
-            showMessage('error', onDocumentKeydown);
+            showMessage('error');
+            document.removeEventListener('keydown', onDocumentKeydown);
           }
         )
         .finally(() => {
