@@ -1,9 +1,9 @@
-import {valueElement, sliderElement, form, sliderContainer, imagePreview} from './dom-elements.js';
+import {effectLevelValue, slider, form, sliderContainer, imagePreview} from './dom-elements.js';
 import {getEffectSliderOptions, getEffecFiltertOption} from '../util.js';
 
-valueElement.value = 0;
+effectLevelValue.value = 0;
 
-noUiSlider.create(sliderElement, {
+noUiSlider.create(slider, {
   range: {
     min: 0,
     max: 100,
@@ -14,9 +14,9 @@ noUiSlider.create(sliderElement, {
   format: {
     to: function (value) {
       if (Number.isInteger(value)) {
-        return value.toFixed(0);
+        return value.toFixed(2);
       }
-      return value.toFixed(1);
+      return value.toFixed(2);
     },
     from: function (value) {
       return parseFloat(value);
@@ -34,23 +34,23 @@ const onSliderChanging = () => {
     imagePreview.style.filter = 'none';
   } else {
     sliderContainer.classList.remove('hidden');
-    sliderElement.noUiSlider.updateOptions(getEffectSliderOptions(activeEffectValue));
+    slider.noUiSlider.updateOptions(getEffectSliderOptions(activeEffectValue));
   }
 };
 
 const onPreviewChanging = () => {
-  valueElement.value = sliderElement.noUiSlider.get();
-  imagePreview.style.filter = getEffecFiltertOption(activeEffectValue, valueElement);
+  effectLevelValue.value = slider.noUiSlider.get();
+  imagePreview.style.filter = getEffecFiltertOption(activeEffectValue, effectLevelValue);
 };
 
 const addEventsEffects = () => {
   form.addEventListener('change', onSliderChanging);
-  sliderElement.noUiSlider.on('update', onPreviewChanging);
+  slider.noUiSlider.on('update', onPreviewChanging);
 };
 
 const removeEventsEffects = () => {
   form.removeEventListener('change', onSliderChanging);
-  sliderElement.noUiSlider.off('update', onPreviewChanging);
+  slider.noUiSlider.off('update', onPreviewChanging);
 };
 
 export {addEventsEffects, removeEventsEffects};

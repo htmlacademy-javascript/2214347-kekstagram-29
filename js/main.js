@@ -2,7 +2,7 @@ import {renderPhotos} from'./view-images.js';
 import {showAlert, debounce} from './util.js';
 import { ALERT_SHOW_TIME, RERENDER_DELAY } from './constants.js';
 import {getData} from './api.js';
-import './editing-mode/base.js';
+import {setFormSubmit, closeEditingMode} from './editing-mode/base.js';
 import { initFilterModule, getFilteredPictures } from './filters.js';
 
 getData()
@@ -16,3 +16,5 @@ getData()
       showAlert(err.message, ALERT_SHOW_TIME);
     }
   );
+
+setFormSubmit(closeEditingMode);

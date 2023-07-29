@@ -1,54 +1,63 @@
-const successModalTemplate = document.querySelector('#success').content.querySelector('.success');
-const errorModalTemplate = document.querySelector('#error').content.querySelector('.error');
-
-const successModal = document.body.appendChild(successModalTemplate.cloneNode(true));
-const buttonSuccess = successModal.querySelector('.success__button');
-
-const errorModal = document.body.appendChild(errorModalTemplate.cloneNode(true));
-const buttonError = errorModal.querySelector('.error__button');
-
-successModal.classList.add('hidden');
-errorModal.classList.add('hidden');
+import { modalSuccessTemplate, modalErrorTemplate } from './dom-elements.js';
+import { isEscapeKey } from '../util.js';
 
 
-const showMessage = (message) => {
-  if (message === 'success') {
-    successModal.classList.remove('hidden');
-    return;
-  }
-  errorModal.classList.remove('hidden');
-};
+const modalSuccess = modalSuccessTemplate.cloneNode(true);
+const buttonSuccess = modalSuccess.querySelector('.success__button');
 
-const hideMessage = () => {
-  successModal.classList.add('hidden');
-  errorModal.classList.add('hidden');
-  document.removeEventListener('keydown', onEscapePress);
-};
+const modalError = modalErrorTemplate.cloneNode(true);
+const buttonError = modalError.querySelector('.error__button');
 
-successModal.addEventListener('click', (evt) => {
-  if (!evt.target.classList.contains('success__inner')) {
-    hideMessage();
-  }
-});
-errorModal.addEventListener('click', (evt) => {
-  if (!evt.target.classList.contains('error__inner')) {
-    hideMessage();
-  }
-});
+const addSuccessModalToBody = () => document.body.appendChild(modalSuccess).classList.add('hidden');
 
-buttonSuccess.addEventListener('click', () => {
-  hideMessage();
-});
+const addErrorModalToBody = () => document.body.appendChild(modalError).classList.add('hidden');
 
-buttonError.addEventListener('click', () => {
-  hideMessage();
-});
-
-function onEscapePress (evt) {
-  if(evt.key === 'Escape') {
+const onEscapePress = (evt) => {
+  if(isEscapeKey(evt)) {
     evt.preventDefault();
     hideMessage();
   }
+};
+
+function hideMessage (callback) {
+  modalSuccess.remove();
+  modalError.remove();
+  document.removeEventListener('keydown', onEscapePress);
+  document.addEventListener('keydown', callback);
 }
+
+const showMessage = (message, callback) => {
+  if (message === 'success') {
+    addSuccessModalToBody();
+    modalSuccess.classList.remove('hidden');
+
+    modalSuccess.addEventListener('click', (evt) => {
+      if (!evt.target.classList.contains('success__inner')) {
+        hideMessage(callback);
+      }
+    });
+
+    buttonSuccess.addEventListener('click', () => {
+      hideMessage(callback);
+    });
+
+    return;
+  }
+  addErrorModalToBody();
+  modalError.classList.remove('hidden');
+
+  modalError.addEventListener('click', (evt) => {
+    if (!evt.target.classList.contains('error__inner')) {
+      hideMessage(callback);
+    }
+  });
+
+  buttonError.addEventListener('click', () => {
+    hideMessage(callback);
+  });
+
+  document.removeEventListener('keydown', callback);
+
+};
 
 export {showMessage, onEscapePress};
