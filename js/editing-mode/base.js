@@ -1,11 +1,28 @@
-import {uploadFile, imageEditingMode, buttonClose, inputHashtag, inputComment, inputScale, imagePreview, effectsPreviews} from './dom-elements.js';
+import {uploadFile, imageEditingMode, buttonClose, inputHashtag, inputComment, inputScale, imagePreview, effectsPreviews, buttonSubmit, form} from './dom-elements.js';
 import { SCALE_VALUE_MAXIMUM, ACCEPTABLE_FILE_TYPES } from '../constants.js';
 import {isEscapeKey} from '../util.js';
-import {setFormSubmit} from './validation.js';
+import {resetValidator, pristine} from './validation.js';
 import {addEventsButtonsZoom, removeEventsButtonsZoom} from './scale.js';
 import {addEventsEffects, removeEventsEffects} from './effects.js';
+import { sendData } from '../api.js';
+import { showMessage, onEscapePress } from './messages.js';
 
 const SCALE_VALUE_BASE = SCALE_VALUE_MAXIMUM;
+
+const ButtonSubmitText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
+
+const blockButtonSubmit = () => {
+  buttonSubmit.disabled = true;
+  buttonSubmit.textContent = ButtonSubmitText.SENDING;
+};
+
+const unblockButtonSubmit = () => {
+  buttonSubmit.disabled = false;
+  buttonSubmit.textContent = ButtonSubmitText.IDLE;
+};
 
 const onDocumentKeydown = (evt) => {
   if (inputHashtag !== document.activeElement && inputComment !== document.activeElement) {
@@ -16,12 +33,13 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const resetForm = () => {
+const resetEditingMode = () => {
   inputHashtag.value = '';
   inputComment.value = '';
   uploadFile.value = '';
   inputScale.value = SCALE_VALUE_BASE;
   document.querySelector('.effects__radio[value = "none"]').checked = true;
+  resetValidator();
 };
 
 function closeEditingMode () {
@@ -29,7 +47,7 @@ function closeEditingMode () {
   document.querySelector('body').classList.remove('modal-open');
   removeEventsButtonsZoom();
   removeEventsEffects();
-  resetForm();
+  resetEditingMode();
   buttonClose.removeEventListener('click', closeEditingMode);
   document.removeEventListener('keydown', onDocumentKeydown);
 }
@@ -55,10 +73,37 @@ const showUploadFile = () => {
   }
 };
 
-setFormSubmit(closeEditingMode);
+const setFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockButtonSubmit();
+      sendData(new FormData(evt.target))
+        .then(() => {
+          onSuccess();
+          document.addEventListener('keydown', onEscapePress);
+          showMessage('success', onDocumentKeydown);
+        })
+        .catch(
+          () => {
+            document.addEventListener('keydown', onEscapePress);
+            showMessage('error', onDocumentKeydown);
+          }
+        )
+        .finally(() => {
+          unblockButtonSubmit();
+        });
+    }
+  });
+};
+
 uploadFile.addEventListener('change', () => {
   openEditingMode();
   showUploadFile();
 });
+
+export {setFormSubmit, closeEditingMode};
 
 

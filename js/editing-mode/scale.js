@@ -7,7 +7,7 @@ arrayInputScale[1] = '%';
 const zoomIn = () => {
   if (inputScale.value !== SCALE_VALUE_MAXIMUM) {
     arrayInputScale[0] += STEP_SCALE;
-    imagePreview.style.scale = arrayInputScale[0] / 100;
+    imagePreview.style.transform = `scale(${arrayInputScale[0] / 100})`;
     inputScale.value = arrayInputScale.join('');
   }
 };
@@ -15,7 +15,7 @@ const zoomIn = () => {
 const zoomOut = () => {
   if (inputScale.value !== SCALE_VALUE_MINIMUM) {
     arrayInputScale[0] -= STEP_SCALE;
-    imagePreview.style.scale = arrayInputScale[0] / 100;
+    imagePreview.style.transform = `scale(${arrayInputScale[0] / 100})`;
     inputScale.value = arrayInputScale.join('');
   }
 };
