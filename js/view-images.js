@@ -52,12 +52,18 @@ const openeningComments = (multipleUse = true) => {
   }
 };
 
+const onCommentsLoaderClick = () => openeningComments();
+
+const onButtonCloseClick = () => {
+  closeFullPhotoModal();
+};
+
 function closeFullPhotoModal () {
   fullPhoto.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   commentsLoader.classList.remove('hidden');
-  buttonClose.removeEventListener('click', closeFullPhotoModal);
-  commentsLoader.removeEventListener('click', openeningComments);
+  buttonClose.removeEventListener('click', onButtonCloseClick);
+  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
@@ -101,8 +107,8 @@ const renderPhotos = (photoDescriptions) => {
 
       openeningComments(false);
 
-      buttonClose.addEventListener('click', closeFullPhotoModal);
-      commentsLoader.addEventListener('click', openeningComments);
+      buttonClose.addEventListener('click', onButtonCloseClick);
+      commentsLoader.addEventListener('click', onCommentsLoaderClick);
       document.addEventListener('keydown', onDocumentKeydown);
     });
 

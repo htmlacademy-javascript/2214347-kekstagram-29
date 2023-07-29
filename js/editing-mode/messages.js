@@ -1,7 +1,6 @@
 import { modalSuccessTemplate, modalErrorTemplate } from './dom-elements.js';
 import { isEscapeKey } from '../util.js';
 
-
 const modalSuccess = modalSuccessTemplate.cloneNode(true);
 const buttonSuccess = modalSuccess.querySelector('.success__button');
 
@@ -19,45 +18,44 @@ const onEscapePress = (evt) => {
   }
 };
 
-function hideMessage (callback) {
+function hideMessage () {
   modalSuccess.remove();
   modalError.remove();
   document.removeEventListener('keydown', onEscapePress);
-  document.addEventListener('keydown', callback);
 }
 
-const showMessage = (message, callback) => {
+const showMessage = (message) => {
   if (message === 'success') {
     addSuccessModalToBody();
     modalSuccess.classList.remove('hidden');
-
-    modalSuccess.addEventListener('click', (evt) => {
-      if (!evt.target.classList.contains('success__inner')) {
-        hideMessage(callback);
-      }
-    });
-
-    buttonSuccess.addEventListener('click', () => {
-      hideMessage(callback);
-    });
+    document.addEventListener('keydown', onEscapePress);
 
     return;
   }
   addErrorModalToBody();
   modalError.classList.remove('hidden');
-
-  modalError.addEventListener('click', (evt) => {
-    if (!evt.target.classList.contains('error__inner')) {
-      hideMessage(callback);
-    }
-  });
-
-  buttonError.addEventListener('click', () => {
-    hideMessage(callback);
-  });
-
-  document.removeEventListener('keydown', callback);
-
+  document.addEventListener('keydown', onEscapePress);
 };
+
+modalSuccess.addEventListener('click', (evt) => {
+  if (!evt.target.classList.contains('success__inner')) {
+    hideMessage();
+  }
+});
+
+buttonSuccess.addEventListener('click', () => {
+  hideMessage();
+});
+
+
+modalError.addEventListener('click', (evt) => {
+  if (!evt.target.classList.contains('error__inner')) {
+    hideMessage();
+  }
+});
+
+buttonError.addEventListener('click', () => {
+  hideMessage();
+});
 
 export {showMessage, onEscapePress};
