@@ -14,14 +14,9 @@ const ButtonSubmitText = {
   SENDING: 'Сохраняю...'
 };
 
-const blockButtonSubmit = () => {
-  buttonSubmit.disabled = true;
-  buttonSubmit.textContent = ButtonSubmitText.SENDING;
-};
-
-const unblockButtonSubmit = () => {
-  buttonSubmit.disabled = false;
-  buttonSubmit.textContent = ButtonSubmitText.IDLE;
+const changeButtonSumbit = (isNecessaryToBlock) => {
+  buttonSubmit.disabled = isNecessaryToBlock;
+  buttonSubmit.textContent = isNecessaryToBlock ? ButtonSubmitText.SENDING : ButtonSubmitText.IDLE;
 };
 
 const onDocumentKeydown = (evt) => {
@@ -72,7 +67,11 @@ const showUploadFile = () => {
     effectsPreviews.forEach((effectPreview) => {
       effectPreview.style.backgroundImage = `url(${imagePreview.src})`;
     });
+
+    openEditingMode();
+    return;
   }
+  showMessage('error');
 };
 
 const setFormSubmit = (onSuccess) => {
@@ -81,7 +80,7 @@ const setFormSubmit = (onSuccess) => {
 
     const isValid = pristine.validate();
     if (isValid) {
-      blockButtonSubmit();
+      changeButtonSumbit(true);
       sendData(new FormData(evt.target))
         .then(() => {
           onSuccess();
@@ -94,14 +93,13 @@ const setFormSubmit = (onSuccess) => {
           }
         )
         .finally(() => {
-          unblockButtonSubmit();
+          changeButtonSumbit(false);
         });
     }
   });
 };
 
 uploadFile.addEventListener('change', () => {
-  openEditingMode();
   showUploadFile();
 });
 
