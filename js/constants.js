@@ -8,7 +8,7 @@ const STEP_SCALE = 25; // шаг масштаба изображения
 const ALERT_SHOW_TIME = 5000; // время показа ошибки
 const NUMBER_RANDOM_PHOTOS = 10; // число рандомных фото
 const RERENDER_DELAY = 500; // время задержки отрисовки
-const ACCEPTABLE_FILE_TYPES = ['jpg', 'jprg', 'png']; // разрешённые типы файлов
+const ACCEPTABLE_FILE_TYPES = ['jpg', 'jpeg', 'png']; // разрешённые типы файлов
 
 export {
   NUMBER_COMMENTS_DISPLAYED,
